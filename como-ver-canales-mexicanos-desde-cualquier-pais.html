@@ -280,5 +280,36 @@ function applyTranslations(lang) {
 document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
 applyTranslations(currentLang);
 
+
+<script>
+var translations = {
+  es: {
+    nav_home2: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
+    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+  },
+  en: {
+    nav_home2: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
+    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+  }
+};
+var currentLang = localStorage.getItem('goat-lang') || 'es';
+function toggleLang() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('goat-lang', currentLang);
+  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+  applyTranslations(currentLang);
+}
+function applyTranslations(lang) {
+  var t = translations[lang];
+  if(!t) return;
+  document.querySelectorAll('[data-i18]').forEach(function(el){
+    var k = el.getAttribute('data-i18');
+    if(t[k]) el.textContent = t[k];
+  });
+}
+document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+applyTranslations(currentLang);
+</script>
+
 </body>
 </html>

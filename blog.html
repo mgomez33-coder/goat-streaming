@@ -228,17 +228,7 @@
   <!-- Language Switcher -->
   <style>
     
-    .lang-switcher button {
-      background: transparent;
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .lang-switcher button.active {
+        .lang-switcher button.active {
       background: #00acc1;
     }
     .lang-switcher button:hover {
@@ -250,10 +240,53 @@
     @media (max-width: 768px) {
       
     }
-  </style>
   
-  
-  
+.lang-toggle {
+  background: #003D6B;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.2s;
+}
+.lang-toggle:hover { background: #0056A0; }
+</style>
+
   <script>
     
+
+<script>
+var translations = {
+  es: {
+    nav_home2: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
+    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+  },
+  en: {
+    nav_home2: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
+    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+  }
+};
+var currentLang = localStorage.getItem('goat-lang') || 'es';
+function toggleLang() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('goat-lang', currentLang);
+  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+  applyTranslations(currentLang);
+}
+function applyTranslations(lang) {
+  var t = translations[lang];
+  if(!t) return;
+  document.querySelectorAll('[data-i18]').forEach(function(el){
+    var k = el.getAttribute('data-i18');
+    if(t[k]) el.textContent = t[k];
+  });
+}
+document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+applyTranslations(currentLang);
+</script>
+
 </html>
