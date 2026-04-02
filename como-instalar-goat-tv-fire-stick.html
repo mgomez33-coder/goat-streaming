@@ -235,64 +235,263 @@
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   </script>
 
+
+  
+  
+    <script>
+// Universal translation engine for Goat Streaming pages
 var translations = {
   es: {
-    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
-    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
-    nav_home: 'Inicio',
+    nav_home: "Home", nav_downloads: "Descargas", nav_pricing: "Precios",
+    nav_panel: "Panel de Revendedor", nav_blog: "Blog", nav_contact: "Contacto",
   },
   en: {
-    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
-    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
-    nav_home: 'Home',
+    nav_home: "Home", nav_downloads: "Downloads", nav_pricing: "Pricing",
+    nav_panel: "Reseller Panel", nav_blog: "Blog", nav_contact: "Contact",
   }
 };
-var currentLang = localStorage.getItem('goat-lang') || 'es';
-function toggleLang() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('goat-lang', currentLang);
-  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-  applyTranslations(currentLang);
-}
-function applyTranslations(lang) {
-  var t = translations[lang];
-  document.querySelectorAll('[data-i18]').forEach(function(el){
-    var k = el.getAttribute('data-i18');
-    if(t[k]) el.textContent = t[k];
-  });
-}
-document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-applyTranslations(currentLang);
 
+var _txt = {}; // stores original Spanish text
+var _lang = localStorage.getItem('goat-lang') || 'es';
 
-<script>
-var translations = {
-  es: {
-    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
-    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+// Spanish->English lookup
+var SP_TO_EN = {
+  'Descargas': 'Downloads',
+  'Precios': 'Pricing',
+  'Panel de Revendedor': 'Reseller Panel',
+  'Contacto': 'Contact',
+  'Blog': 'Blog',
+  'Todos los derechos reservados': 'All rights reserved.',
+  'Desarrollado por': 'Developed by',
+  '© 2026 Goat Streaming. Todos los derechos reservados.': '© 2026 Goat Streaming. All rights reserved.',
+};
+
+// English->Spanish lookup
+var EN_TO_SP = {v: k for k, v in SP_TO_EN.items()};
+EN_TO_SP['All rights reserved.'] = 'Todos los derechos reservados.';
+
+// Quick tag translators
+var TAG_TRANS = {
+  'en': {
+    'h1': {},
+    'h2': {},
+    'h3': {},
+    'p': {},
+    'li': {},
+    'td': {},
+    'th': {},
   },
-  en: {
-    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
-    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+  'es': {
+    'h1': {},
+    'h2': {},
+    'h3': {},
+    'p': {},
+    'li': {},
+    'td': {},
+    'th': {},
   }
 };
-var currentLang = localStorage.getItem('goat-lang') || 'es';
+
+// Common page-specific translations
+var PAGE_TRANS = {
+  'es': {
+    // ---- DESCARGAS ----
+    'Goat Streaming - Descargar en Fire TV Stick': 'Goat Streaming - Download on Fire TV Stick',
+    'Guía completa para instalar Goat Streaming en tu Fire TV Stick con códigos de descarga.': 'Complete guide to install Goat Streaming on your Fire TV Stick with download codes.',
+    '¿Es seguro descargar Goat Streaming?': 'Is it safe to download Goat Streaming?',
+    '¿Qué hago si Downloader no encuentra el código?': 'What if Downloader cannot find the code?',
+    '¿Puedo instalar Goat Streaming en mi teléfono Android?': 'Can I install Goat Streaming on my Android phone?',
+    '¿Cuánto tiempo tarda la activación?': 'How long does activation take?',
+    'Sí, Goat Streaming es completamente seguro. Descárgalo únicamente usando el código oficial proporcionado (1911324) a través de la app Downloader en tu Fire TV Stick.': 'Yes, Goat Streaming is completely safe. Download it only using the official code (1911324) through the Downloader app on your Fire TV Stick.',
+    'Si el código no funciona, contáctanos por WhatsApp y te proporcionaremos un enlace directo alternativo.': 'If the code does not work, contact us via WhatsApp and we will provide an alternative direct link.',
+    'Sí, Goat Streaming es compatible con cualquier dispositivo Android. Contáctanos por WhatsApp para recibir el enlace de descarga directa para Android.': 'Yes, Goat Streaming is compatible with any Android device. Contact us via WhatsApp to receive the direct download link for Android.',
+    'La activación se realiza en minutos durante nuestro horario de atención (Lunes a Sábado de 8 am a 10 pm y Domingos de 9 am a 6 pm, hora centro de México).': 'Activation is done in minutes during our business hours (Monday to Saturday 8am to 10pm and Sundays 9am to 6pm, Mexico City time).',
+    '¿Listo para empezar?': 'Ready to get started?',
+    'Contacta con nosotros y te ayudamos con la instalación.': 'Contact us and we will help you with the installation.',
+    'Contactar Soporte': 'Contact Support',
+    // ---- CONTACTO ----
+    'Contacto y Soporte Goat Streaming': 'Goat Streaming Contact & Support',
+    'Asistencia personalizada para activación, dudas y soporte técnico. Estamos aquí para ayudarte.': 'Personalized assistance for activation, questions and technical support. We are here to help you.',
+    'La forma más rápida de contactarnos. Te respondemos en minutos durante nuestro horario de atención.': 'The fastest way to reach us. We respond in minutes during our business hours.',
+    'Escribir por WhatsApp': 'Write via WhatsApp',
+    'Soporte Técnico': 'Technical Support',
+    '¿Problemas con la instalación o activación? Nuestro equipo te guía paso a paso para que disfrutes de Goat Streaming sin complicaciones.': 'Problems with installation or activation? Our team guides you step by step so you can enjoy Goat Streaming without complications.',
+    '✓ Ayuda con instalación': '✓ Installation help',
+    '✓ Activación de cuentas': '✓ Account activation',
+    '✓ Resolución de errores': '✓ Error resolution',
+    '✓ Configuración de dispositivos': '✓ Device configuration',
+    '🕐 Horario de Atención': '🕐 Business Hours',
+    'Lunes a Sábado: 8:00 am a 10:00 pm': 'Monday to Saturday: 8:00 am to 10:00 pm',
+    'Domingos: 9:00 am a 6:00 pm': 'Sundays: 9:00 am to 6:00 pm',
+    'Hora centro de México (CST)': 'Mexico City time (CST)',
+    'Guía Rápida': 'Quick Guide',
+    '¿Qué información enviar?': 'What information to send?',
+    'Para una atención más rápida, incluye esta información al contactarnos:': 'For faster service, include this information when contacting us:',
+    'Para Activación': 'For Activation',
+    'Envía tu nombre + foto del código de activación que aparece en pantalla con el texto "GoatPrueba".': 'Send your name + photo of the activation code shown on screen with the text "GoatPrueba".',
+    'Para Suscripción': 'For Subscription',
+    'Indica el plan elegido (1, 3, 6 o 12 meses) y tu método de pago preferido. Te enviaremos los datos.': 'Indicate the chosen plan (1, 3, 6 or 12 months) and your preferred payment method. We will send you the details.',
+    'Para Soporte': 'For Support',
+    'Describe el problema con detalle. Indica qué dispositivo usas y si es posible envía capturas de pantalla.': 'Describe the problem in detail. Indicate which device you use and send screenshots if possible.',
+    '¿Primera vez en Goat Streaming?': 'First time at Goat Streaming?',
+    'Descarga la app y solicita tu prueba gratuita de 24 horas.': 'Download the app and request your free 24-hour trial.',
+    'Ver Guía de Descarga': 'See Download Guide',
+    'Ver Planes': 'See Plans',
+    // ---- BLOG ----
+    'Ver TV Online con Goat Streaming': 'Watch TV Online with Goat Streaming',
+    'Todo lo que necesitas saber sobre streaming, TV online y cómo Goat Streaming transforma tu experiencia de entretenimiento.': 'Everything you need to know about streaming, online TV and how Goat Streaming transforms your entertainment experience.',
+    'Artículos del Blog': 'Blog Articles',
+    '¿Por qué elegir ver TV online?': 'Why choose watching TV online?',
+    'La televisión ha evolucionado. Ya no necesitas estar pegado a un horario fijo o pagar por paquetes de cable con canales que no ves.': 'Television has evolved. You no longer need to be glued to a fixed schedule or pay for cable packages with channels you never watch.',
+    'Ver TV online te da la libertad de elegir qué, cuándo y dónde ver.': 'Watching TV online gives you the freedom to choose what, when and where to watch.',
+    'Con plataformas como Goat Streaming, accedes a contenido en vivo y bajo demanda con la calidad que mereces: HD y 4K.': 'With platforms like Goat Streaming, you access live and on-demand content with the quality you deserve: HD and 4K.',
+    'Ventajas de ver TV online con Goat Streaming': 'Advantages of watching TV online with Goat Streaming',
+    'Libertad total: Mira lo que quieras, cuando quieras, sin horarios fijos.': 'Total freedom: Watch what you want, when you want, no fixed schedules.',
+    'Calidad superior: Disfruta de tus películas y series favoritas en HD y 4K.': 'Superior quality: Enjoy your favorite movies and series in HD and 4K.',
+    'Portabilidad: Lleva tu entretenimiento a donde vayas, compatible con múltiples dispositivos.': 'Portability: Take your entertainment with you, compatible with multiple devices.',
+    'Ahorro significativo: Planes accesibles sin contratos forzosos ni sorpresas.': 'Significant savings: Affordable plans without forced contracts or surprises.',
+    'Contenido para todos: Desde películas de estreno hasta contenido infantil en KidsZone.': 'Content for everyone: From blockbuster movies to children content in KidsZone.',
+    '¿Cómo funciona Goat Streaming?': 'How does Goat Streaming work?',
+    'Goat Streaming es una aplicación de streaming que combina lo mejor de la televisión en vivo con el catálogo on-demand.': 'Goat Streaming is a streaming application that combines the best of live TV with the on-demand catalog.',
+    'Una vez instalada en tu dispositivo compatible, accedes a:': 'Once installed on your compatible device, you access:',
+    'Thousands of movies and series in HD and 4K': 'Miles de películas y series en HD y 4K',
+    'Pasos para empezar con Goat Streaming': 'Steps to get started with Goat Streaming',
+    'Comenzar con Goat Streaming es sencillo y toma solo unos minutos:': 'Getting started with Goat Streaming is easy and takes just a few minutes:',
+    'Descarga la app': 'Download the app',
+    'Solicita tu activación': 'Request your activation',
+    'Prueba gratis por 24 horas': 'Free 24-hour trial',
+    'Elige tu plan': 'Choose your plan',
+    '¿Listo para probar Goat Streaming?': 'Ready to try Goat Streaming?',
+    'Descarga ahora y disfruta de 24 horas de cortesía gratis.': 'Download now and enjoy 24 hours of free courtesy.',
+    'Descargar Ahora': 'Download Now',
+    'Contactar Soporte': 'Contact Support',
+    // ---- PANEL ----
+    'Genera Ingresos': 'Earn Income',
+    'Panel GoatStreaming': 'GoatStreaming Panel',
+    'El Panel de Revendedor es una herramienta exclusiva para personas interesadas en generar ingresos como distribuidores.': 'The Reseller Panel is an exclusive tool for people interested in earning income as distributors.',
+    'Planes y Precios del Panel de Revendedor': 'Reseller Panel Plans and Pricing',
+    '💰 Planes y Precios': '💰 Plans and Pricing',
+    '📋 Lista para Revendedores': '📋 List for Resellers',
+    '⚠️ Para proteger la red de revendedores, no está permitido vender por debajo de este precio.': '⚠️ To protect the reseller network, selling below this price is not allowed.',
+    'Precio Mínimo de Reventa': 'Minimum Resale Price',
+    '⚙️ ¿Cómo Funciona?': '⚙️ How It Works?',
+    '¿Cómo Funciona el Panel de Revendedor?': 'How Does the Reseller Panel Work?',
+    '🔧 Funciones Principales': '🔧 Main Functions',
+    'Funciones Principales del Panel de Revendedor': 'Main Reseller Panel Functions',
+    'Activar Nuevos Clientes': 'Activate New Clients',
+    'Renovar Cuentas Vencidas': 'Renew Expired Accounts',
+    'Gestionar Fechas de Corte': 'Manage Cutoff Dates',
+    'Crear Demos': 'Create Demos',
+    'Acceso 24/7': '24/7 Access',
+    '✅ Ventajas': '✅ Advantages',
+    'Ventajas de Usar el Panel de Revendedor': 'Advantages of Using the Reseller Panel',
+    '🚀 Comienza Ahora': '🚀 Get Started Now',
+    '¿Listo para generar ingresos?': 'Ready to generate income?',
+    'Contáctanos por WhatsApp y comienza a distribuir GoatStreaming hoy mismo.': 'Contact us via WhatsApp and start distributing GoatStreaming today.',
+    '💬 Contactar por WhatsApp': '💬 Contact via WhatsApp',
+    // ---- PROPUESTA ----
+    'Propuesta de Marketing': 'Marketing Proposal',
+    'Dr. Emmanuel Vélez — Ginecología y Obstetricia': 'Dr. Emmanuel Vélez — Gynecology and Obstetrics',
+    '1. Página Web Profesional': '1. Professional Website',
+    '2. Publicidad — Directorio Médico': '2. Advertising — Medical Directory',
+    '3. Publicidad — Revista Chihuahua es tuyo': '3. Advertising — Chihuahua es tuyo Magazine',
+    '💰 Inversión Total': '💰 Total Investment',
+    '📅 Timeline Estimado': '📅 Estimated Timeline',
+    '¿Por qué una página web profesional?': 'Why a professional website?',
+    'Siguiente Paso': 'Next Step',
+    // ---- INSTALL ----
+    'Instalar Goat Streaming en Fire Stick': 'Install Goat Streaming on Fire Stick',
+    'Guía paso a paso para tener Goat Streaming funcionando en tu Amazon Fire TV en menos de 5 minutos.': 'Step-by-step guide to get Goat Streaming running on your Amazon Fire TV in under 5 minutes.',
+    // ---- CANALES ----
+    'Ver Canales Mexicanos Desde Cualquier País': 'Watch Mexican Channels from Any Country',
+    'Guía 2026 para mexicanos en el extranjero: cómo ver Canal 5, TV Azteca, Las Estrellas y más sin restricciones geográficas.': '2026 guide for Mexicans abroad: how to watch Canal 5, TV Azteca, Las Estrellas and more without geographic restrictions.',
+    // ---- FUTBOL ----
+    'Ver Fútbol en Vivo Gratis': 'Watch Live Soccer for Free',
+    'Guía 2026 para ver Liga MX, Champions, La Liga y más desde tu celular, tablet o TV sin pagar cable.': '2026 guide to watch Liga MX, Champions, La Liga and more from your phone, tablet or TV without paying for cable.',
+    // ---- SERIES ----
+    'Goat Streaming: Series y Películas Actuales': 'Goat Streaming: Current Series & Movies',
+    'Todo el contenido que quieres ver, cuando quieres verlo, en HD y 4K.': 'All the content you want to watch, when you want to watch it, in HD and 4K.',
+    // ---- VS NETFLIX ----
+    'Goat Streaming vs Netflix': 'Goat Streaming vs Netflix',
+    'Comparación honesta y completa para que decidas cuál es mejor para ver TV en 2026.': 'Honest and complete comparison to help you decide which is better for watching TV in 2026.',
+    // ---- MEJORES APPS ----
+    'Las 7 Mejores Apps de Streaming Gratis en 2026': 'The 7 Best Free Streaming Apps in 2026',
+    'Comparamos calidad, contenido, precios y experiencia de usuario para que elijas la mejor opción.': 'We compare quality, content, prices and user experience so you choose the best option.',
+  },
+  'en': {
+    // English texts (for reverse translation)
+  }
+};
+
+// Build EN_TO_SP from PAGE_TRANS.es
+for (var k in PAGE_TRANS.es) {
+  EN_TO_SP[PAGE_TRANS.es[k]] = k;
+}
+
 function toggleLang() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('goat-lang', currentLang);
-  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-  applyTranslations(currentLang);
+  var btn = document.getElementById('langBtn');
+  if (!btn) return;
+  _lang = _lang === 'es' ? 'en' : 'es';
+  localStorage.setItem('goat-lang', _lang);
+  btn.textContent = _lang === 'es' ? 'EN' : 'ES';
+  applyTranslations(_lang);
 }
+
 function applyTranslations(lang) {
-  var t = translations[lang];
-  if(!t) return;
-  document.querySelectorAll('[data-i18]').forEach(function(el){
+  // 1. Navbar data-i18
+  document.querySelectorAll('[data-i18]').forEach(function(el) {
     var k = el.getAttribute('data-i18');
-    if(t[k]) el.textContent = t[k];
+    var t = translations[lang];
+    if (t && t[k]) el.textContent = t[k];
   });
+
+  // 2. Translate by text matching
+  var map = lang === 'en' ? PAGE_TRANS.es : EN_TO_SP;
+  var allEls = document.querySelectorAll('h1,h2,h3,h4,p,li,td,th,span,button');
+  allEls.forEach(function(el) {
+    var txt = el.textContent.trim();
+    if (!txt) return;
+    if (map[txt] !== undefined) {
+      _txt[txt] = _txt[txt] || txt;
+      el.textContent = map[txt];
+    }
+  });
+
+  // 3. Footer links
+  if (lang === 'en') {
+    document.querySelectorAll('footer a').forEach(function(a) {
+      var t = a.textContent.trim();
+      if (SP_TO_EN[t]) {
+        _txt[a.href + '_fa'] = _txt[a.href + '_fa'] || t;
+        a.textContent = SP_TO_EN[t];
+      }
+    });
+    var cp = document.querySelector('footer p');
+    if (cp && cp.textContent.indexOf('Todos') >= 0) {
+      _txt['_copy'] = cp.textContent;
+      cp.textContent = '© 2026 Goat Streaming. All rights reserved.';
+    }
+    var fc = document.querySelector('.footer-credit');
+    if (fc && fc.textContent.indexOf('Desarrollado') >= 0) {
+      _txt['_credit'] = fc.textContent;
+      fc.innerHTML = 'Developed by <a href="https://cuuapps.mx" target="_blank" rel="noopener">cuuapps.mx</a>';
+    }
+  } else {
+    document.querySelectorAll('footer a').forEach(function(a) {
+      var key = a.href + '_fa';
+      if (_txt[key]) a.textContent = _txt[key];
+    });
+    var cp = document.querySelector('footer p');
+    if (cp && _txt['_copy']) cp.textContent = _txt['_copy'];
+    var fc = document.querySelector('.footer-credit');
+    if (fc && _txt['_credit']) fc.innerHTML = _txt['_credit'];
+  }
 }
-document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-applyTranslations(currentLang);
+
+// Init
+var btn = document.getElementById('langBtn');
+if (btn) btn.textContent = _lang === 'es' ? 'EN' : 'ES';
+applyTranslations(_lang);
 </script>
 
 </body>

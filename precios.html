@@ -186,62 +186,96 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
 
-var translations = {
-  es: {
-    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
-    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
-    nav_home: 'Inicio',
-  },
-  en: {
-    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
-    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
-    nav_home: 'Home',
-  }
-};
-var currentLang = localStorage.getItem('goat-lang') || 'es';
-function toggleLang() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('goat-lang', currentLang);
-  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-  applyTranslations(currentLang);
-}
-function applyTranslations(lang) {
-  var t = translations[lang];
-  document.querySelectorAll('[data-i18]').forEach(function(el){
-    var k = el.getAttribute('data-i18');
-    if(t[k]) el.textContent = t[k];
-  });
-}
-document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
-applyTranslations(currentLang);
-
-
 <script>
 var translations = {
   es: {
     nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
     nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+    hero_badge: 'Sin contratos forzosos',
+    hero_h1: 'Planes y <span class="gradient-text">Precios</span>',
+    hero_p: 'Elige el plan que mejor se adapte a ti. Cancela cuando quieras.',
+    price_note: '✅ Sin contratos forzosos · ✅ Activación en menos de 24h · ✅ Pago seguro con Stripe',
+    pay_tag: '💳 Pagos',
+    pay_h2: 'Métodos de pago',
+    pay_p: 'Varias opciones seguras y accesibles.',
+    pay_s1: 'México', pay_s2: 'Estados Unidos', pay_s3: 'Otros países',
+    pay_li1: 'Transferencia bancaria · Pago en efectivo en tiendas OXXO · Crypto',
+    pay_li2: 'Tarjetas de Crédito · PayPal · Crypto',
+    pay_li3: 'Transferencia bancaria internacional · Western Union · Crypto',
+    pay_note: '⭐ Recomendación para USA: Felix Pago.',
+    cta_h2: '¿Tienes dudas sobre los planes?',
+    cta_p: 'Contáctanos por WhatsApp y te ayudamos a elegir el mejor plan.',
+    cta_btn: '💬 Contactar por WhatsApp',
+    footer: '© 2026 Goat Streaming. Todos los derechos reservados.',
   },
   en: {
     nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
     nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+    hero_badge: 'No forced contracts',
+    hero_h1: 'Plans and <span class="gradient-text">Pricing</span>',
+    hero_p: 'Choose the plan that best fits you. Cancel anytime.',
+    price_note: '✅ No forced contracts · ✅ Activation in under 24h · ✅ Secure payment with Stripe',
+    pay_tag: '💳 Payments',
+    pay_h2: 'Payment methods',
+    pay_p: 'Several safe and accessible options.',
+    pay_s1: 'Mexico', pay_s2: 'United States', pay_s3: 'Other countries',
+    pay_li1: 'Bank transfer · Cash payment at OXXO stores · Crypto',
+    pay_li2: 'Credit Cards · PayPal · Crypto',
+    pay_li3: 'International bank transfer · Western Union · Crypto',
+    pay_note: '⭐ Recommendation for USA: Felix Pago.',
+    cta_h2: 'Questions about the plans?',
+    cta_p: 'Contact us on WhatsApp and well help you choose the best plan.',
+    cta_btn: '💬 Contact on WhatsApp',
+    footer: '© 2026 Goat Streaming. All rights reserved.',
   }
 };
+
 var currentLang = localStorage.getItem('goat-lang') || 'es';
+
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
   localStorage.setItem('goat-lang', currentLang);
   document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
   applyTranslations(currentLang);
 }
+
 function applyTranslations(lang) {
   var t = translations[lang];
-  if(!t) return;
-  document.querySelectorAll('[data-i18]').forEach(function(el){
+  if (!t) return;
+  document.querySelectorAll('[data-i18]').forEach(function(el) {
     var k = el.getAttribute('data-i18');
-    if(t[k]) el.textContent = t[k];
+    if (t[k]) el.textContent = t[k];
   });
+  var badge = document.querySelector('.hero-badge');
+  if (badge) badge.innerHTML = '<span class="dot"></span>' + t.hero_badge;
+  var h1 = document.querySelector('.hero h1');
+  if (h1) h1.innerHTML = t.hero_h1;
+  var heroP = document.querySelector('.hero-content > p');
+  if (heroP) heroP.textContent = t.hero_p;
+  var note = document.querySelector('.price-note');
+  if (note) note.textContent = t.price_note;
+  var tags = document.querySelectorAll('.section-header .tag');
+  if (tags[0]) tags[0].textContent = t.pay_tag;
+  var h2s = document.querySelectorAll('.section-header h2');
+  if (h2s[0]) h2s[0].textContent = t.pay_h2;
+  var sectionPs = document.querySelectorAll('.section-header p');
+  if (sectionPs[0]) sectionPs[0].textContent = t.pay_p;
+  var h4s = document.querySelectorAll('.payment-region h4');
+  if (h4s[0]) h4s[0].textContent = t.pay_s1;
+  if (h4s[1]) h4s[1].textContent = t.pay_s2;
+  if (h4s[2]) h4s[2].textContent = t.pay_s3;
+  var payNote = document.querySelector('.payment-note');
+  if (payNote) payNote.innerHTML = t.pay_note;
+  var ctaH2 = document.querySelectorAll('.section h2');
+  if (ctaH2[1]) ctaH2[1].textContent = t.cta_h2;
+  var ctaP = document.querySelectorAll('.section p');
+  if (ctaP[1]) ctaP[1].textContent = t.cta_p;
+  var ctaBtn = document.querySelector('.section .btn');
+  if (ctaBtn) ctaBtn.textContent = t.cta_btn;
+  var footerP = document.querySelector('footer > p:first-of-type');
+  if (footerP) footerP.textContent = t.footer;
 }
+
 document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
 applyTranslations(currentLang);
 </script>
