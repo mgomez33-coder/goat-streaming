@@ -29,14 +29,14 @@
   </a>
   <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   <ul class="nav-links">
-    <li><a href="index.html" data-i18="nav_home2">Home</a></li>
+    <li><a href="index.html" data-i18="nav_home">Home</a></li>
     <li><a href="descargas.html" data-i18="nav_downloads">Descargas</a></li>
     <li><a href="precios.html" data-i18="nav_pricing">Precios</a></li>
     <li><a href="panel.html" data-i18="nav_panel">Panel de Revendedor</a></li>
     <li><a href="blog.html" data-i18="nav_blog">Blog</a></li>
     <li><a href="contacto.html" data-i18="nav_contact">Contacto</a></li>
   </ul>
-<button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+  <li><button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button></li>
 </nav>
 
   <section class="page-hero">
@@ -255,12 +255,12 @@ var translations = {
   es: {
     nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
     nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
-    nav_home2: 'Inicio',
+    nav_home: 'Inicio',
   },
   en: {
     nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
     nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
-    nav_home2: 'Home',
+    nav_home: 'Home',
   }
 };
 var currentLang = localStorage.getItem('goat-lang') || 'es';
@@ -284,11 +284,11 @@ applyTranslations(currentLang);
 <script>
 var translations = {
   es: {
-    nav_home2: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
+    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
     nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
   },
   en: {
-    nav_home2: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
+    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
     nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
   }
 };
