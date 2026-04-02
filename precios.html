@@ -20,13 +20,14 @@
   </a>
   <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="descargas.html">Descargas</a></li>
-    <li><a href="precios.html" class="active">Precios</a></li>
-    <li><a href="panel.html">Panel de Revendedor</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="index.html" data-i18="nav_home2">Home</a></li>
+    <li><a href="descargas.html" data-i18="nav_downloads">Descargas</a></li>
+    <li><a href="precios.html" class="active" data-i18="nav_pricing">Precios</a></li>
+    <li><a href="panel.html" data-i18="nav_panel">Panel de Revendedor</a></li>
+    <li><a href="blog.html" data-i18="nav_blog">Blog</a></li>
+    <li><a href="contacto.html" data-i18="nav_contact">Contacto</a></li>
   </ul>
+<button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
 </nav>
 
 <!-- HERO PRECIOS -->
@@ -184,5 +185,35 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
+
+var translations = {
+  es: {
+    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
+    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+    nav_home2: 'Inicio',
+  },
+  en: {
+    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
+    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+    nav_home2: 'Home',
+  }
+};
+var currentLang = localStorage.getItem('goat-lang') || 'es';
+function toggleLang() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('goat-lang', currentLang);
+  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+  applyTranslations(currentLang);
+}
+function applyTranslations(lang) {
+  var t = translations[lang];
+  document.querySelectorAll('[data-i18]').forEach(function(el){
+    var k = el.getAttribute('data-i18');
+    if(t[k]) el.textContent = t[k];
+  });
+}
+document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+applyTranslations(currentLang);
+
 </body>
 </html>

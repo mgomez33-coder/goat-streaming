@@ -142,17 +142,7 @@
 </div>
   <!-- Language Switcher -->
   <style>
-    .lang-switcher {
-      position: fixed;
-      top: 70px;
-      right: 12px;
-      z-index: 9999;
-      background: rgba(0,0,0,0.8);
-      border-radius: 8px;
-      padding: 6px;
-      display: flex;
-      gap: 4px;
-    }
+    
     .lang-switcher button {
       background: transparent;
       border: none;
@@ -173,37 +163,43 @@
       background: #00acc1;
     }
     @media (max-width: 768px) {
-      .lang-switcher {
-        top: 65px;
-        right: 8px;
-      }
+      
     }
   </style>
-  <div class="lang-switcher" id="langSwitcher">
-    <button onclick="switchLang('es')" class="active" id="lang-es">ES 🇲🇽</button>
-    <button onclick="switchLang('en')" id="lang-en">EN 🇺🇸</button>
-  </div>
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+  
   <script>
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage:"es",includedLanguages:"en,es",layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, "google_translate隐形");
-  }
-  function switchLang(lang) {
-    document.querySelectorAll('.lang-switcher button').forEach(b => b.classList.remove('active'));
-    document.getElementById('lang-' + lang).classList.add('active');
-    var select = document.querySelector('.goog-te-gadget select');
-    if (select) {
-      select.value = lang;
-      select.dispatchEvent(new Event('change'));
-    } else {
-      var frame = document.querySelector('.skiptranslate');
-      if (frame) {
-        window.location.hash = '#googtrans(' + (lang === 'en' ? '/en' : '') + ')';
-        location.reload();
-      }
-    }
-  }
-  </script>
+  
   <div id="google_translate隐形" style="position:fixed;top:-9999px;left:-9999px;"></div>
+
+var translations = {
+  es: {
+    nav_home: 'Home', nav_downloads: 'Descargas', nav_pricing: 'Precios',
+    nav_panel: 'Panel de Revendedor', nav_blog: 'Blog', nav_contact: 'Contacto',
+    nav_home2: 'Inicio',
+  },
+  en: {
+    nav_home: 'Home', nav_downloads: 'Downloads', nav_pricing: 'Pricing',
+    nav_panel: 'Reseller Panel', nav_blog: 'Blog', nav_contact: 'Contact',
+    nav_home2: 'Home',
+  }
+};
+var currentLang = localStorage.getItem('goat-lang') || 'es';
+function toggleLang() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('goat-lang', currentLang);
+  document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+  applyTranslations(currentLang);
+}
+function applyTranslations(lang) {
+  var t = translations[lang];
+  document.querySelectorAll('[data-i18]').forEach(function(el){
+    var k = el.getAttribute('data-i18');
+    if(t[k]) el.textContent = t[k];
+  });
+}
+document.getElementById('langBtn').textContent = currentLang === 'es' ? 'EN' : 'ES';
+applyTranslations(currentLang);
+
 </body>
 </html>
