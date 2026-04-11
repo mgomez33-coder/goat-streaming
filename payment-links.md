@@ -1,20 +1,20 @@
 # Payment Links - Goat Streaming
 
-## Stripe Payment Links
+## Stripe Payment Links (actualizados - abril 2026)
 
 | Plan | Precio | Link de pago |
 |------|--------|-------------|
-| 1 Mes | $300 MXN | https://buy.stripe.com/3cI28qco443YfcieRme3e0B |
-| 3 Meses | $855 MXN | https://buy.stripe.com/fZuaEW9bSeIC4xEdNie3e0C |
-| 6 Meses | $1,620 MXN | https://buy.stripe.com/fZu5kC5ZGdEyaW24cIe3e0D |
-| 12 Meses | $3,060 MXN | https://buy.stripe.com/8x2cN4fAg1VQ3tAeRme3e0E |
+| 1 Mes | $250 MXN | https://buy.stripe.com/5kQ3cuafW8keaW2gZue3e0F |
+| 3 Meses | $675 MXN | https://buy.stripe.com/dRmcN4bk08ke3tAeRme3e0G |
+| 6 Meses | $1,200 MXN | https://buy.stripe.com/5kQ6oG9bS2ZU8NUaB6e3e0H |
+| 12 Meses | $2,160 MXN | https://buy.stripe.com/5kQ9ASds8asm3tA38Ee3e0I |
 
 ## Stripe Product IDs (para referencia)
 
-- 1 mes: `prod_UEvLnhrLVWhQzh` / `price_1TGRUgB95TiHJh5hE6Sw3LBM`
-- 3 meses: `prod_UEvLjPIXCTGSSb` / `price_1TGRUhB95TiHJh5h7UfT6d2f`
-- 6 meses: `prod_UEvL5xDgmINHRj` / `price_1TGRUhB95TiHJh5hcBKLQsuM`
-- 12 meses: `prod_UEvLeYz6CXy6PL` / `price_1TGRUhB95TiHJh5hBSV3BoH8`
+- 1 mes: `prod_UEvLnhrLVWhQzh` / `price_1TKmJbB95TiHJh5hWVFNhq2h` ($250 MXN)
+- 3 meses: `prod_UEvLjPIXCTGSSb` / `price_1TKmJqB95TiHJh5h9hRtgcAR` ($675 MXN)
+- 6 meses: `prod_UEvL5xDgmINHRj` / `price_1TKmJxB95TiHJh5hoEUQBGGS` ($1,200 MXN)
+- 12 meses: `prod_UEvLeYz6CXy6PL` / `price_1TKmK5B95TiHJh5hNBR1FWjw` ($2,160 MXN)
 
 ## Productos en Stripe Dashboard
 
