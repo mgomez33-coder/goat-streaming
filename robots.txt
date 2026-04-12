@@ -2,4 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /panel.html
 
-Sitemap: https://www.goat-streaming.vercel.app/sitemap.xml
+Sitemap: https://www.goatstreaming.tv/sitemap.xml
+
+# Custom error pages
+ErrorDocument 404 /404.html
