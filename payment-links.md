@@ -1,21 +1,31 @@
 # Payment Links - Goat Streaming
 
-## Stripe Payment Links (actualizados - abril 2026)
+## WhatsApp para suscripciones
 
-| Plan | Precio | Link de pago |
-|------|--------|-------------|
-| 1 Mes | $250 MXN | https://buy.stripe.com/5kQ3cuafW8keaW2gZue3e0F |
-| 3 Meses | $675 MXN | https://buy.stripe.com/dRmcN4bk08ke3tAeRme3e0G |
-| 6 Meses | $1,200 MXN | https://buy.stripe.com/5kQ6oG9bS2ZU8NUaB6e3e0H |
-| 12 Meses | $2,160 MXN | https://buy.stripe.com/5kQ9ASds8asm3tA38Ee3e0I |
+Para suscribirte a cualquier plan, contáctanos por WhatsApp:
 
-## Stripe Product IDs (para referencia)
+📱 **+52 644 107 6718**
 
-- 1 mes: `prod_UEvLnhrLVWhQzh` / `price_1TKmJbB95TiHJh5hWVFNhq2h` ($250 MXN)
-- 3 meses: `prod_UEvLjPIXCTGSSb` / `price_1TKmJqB95TiHJh5h9hRtgcAR` ($675 MXN)
-- 6 meses: `prod_UEvL5xDgmINHRj` / `price_1TKmJxB95TiHJh5hoEUQBGGS` ($1,200 MXN)
-- 12 meses: `prod_UEvLeYz6CXy6PL` / `price_1TKmK5B95TiHJh5hNBR1FWjw` ($2,160 MXN)
+Envíanos un mensaje indicando:
+- El plan que te interesa (1, 3, 6 o 12 meses)
+- Tu nombre
+- Te enviamos los datos para el pago
 
-## Productos en Stripe Dashboard
+## Métodos de pago disponibles
 
-https://dashboard.stripe.com/products
+- **México:** Transferencia bancaria, efectivo en OXXO, crypto
+- **USA:** Tarjeta de crédito, PayPal, crypto
+- **Otros países:** Transferencia bancaria internacional, Western Union, crypto
+
+## Productos y precios (referencia)
+
+| Plan | Precio MXN |
+|------|-----------|
+| 1 Mes | $250 MXN |
+| 3 Meses | $675 MXN |
+| 6 Meses | $1,200 MXN |
+| 12 Meses | $2,160 MXN |
+
+---
+
+_Última actualización: abril 2026. Los pagos ahora se gestionan por WhatsApp._
